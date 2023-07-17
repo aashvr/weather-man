@@ -5,24 +5,24 @@ from colorama import Fore, Style
 
 def get_max_temp(year, city):
 
-    # Read the data from the CSV file into a pandas DataFrame
+    # Reading the data from the csv file.
     data = pd.read_csv('./' + city.lower() + '.csv')
 
     # Filter the data for the given year
     year_data = data[data['Time'].str.startswith(year)]
 
     if not year_data.empty:
-        # Find the highest temperature and corresponding day
+        # highest temperature and corresponding day
         max_temp = year_data['Max TemperatureC'].max()
         max_temp_day = year_data.loc[year_data['Max TemperatureC']
                                      == max_temp, 'Time'].values[0]
 
-        # Find the lowest temperature and corresponding day
+        # lowest temperature and corresponding day
         min_temp = year_data['Min TemperatureC'].min()
         min_temp_day = year_data.loc[year_data['Min TemperatureC']
                                      == min_temp, 'Time'].values[0]
 
-        # Find the most humid day and humidity
+        # most humid day and humidity
         max_humidity = year_data['Max Humidity'].max()
         max_humidity_day = year_data.loc[year_data['Max Humidity']
                                          == max_humidity, 'Time'].values[0]
@@ -45,7 +45,7 @@ def get_max_temp(year, city):
 
 
 def get_monthly_avg(year, month, city):
-    # Read the data from the CSV file into a pandas DataFrame
+    # Read the data from the CSV file
     data = pd.read_csv('./' + city.lower() + '.csv')
 
     data.dropna()
@@ -61,9 +61,6 @@ def get_monthly_avg(year, month, city):
         # month_data.to_csv('./before_' + city.lower() + '_' +
         #                   year + '_' + month + '.csv')
 
-        # month_data = month_data.dropna(
-        #     subset=['Max TemperatureC', 'Min TemperatureC', 'Mean Humidity'])
-
         # drow rows with NaN values in max temp, min temp, mean humidity
         month_data = month_data[month_data['Max TemperatureC'].notna()]
         month_data = month_data[month_data['Min TemperatureC'].notna()]
@@ -75,13 +72,13 @@ def get_monthly_avg(year, month, city):
         # print(month_data.head())
 
         if not month_data.empty:
-            # Find the average highest temperature
+            # average highest temperature
             avg_max_temp = month_data['Max TemperatureC'].mean()
 
-            # Find the average lowest temperature
+            # average lowest temperature
             avg_min_temp = month_data['Min TemperatureC'].mean()
 
-            # Find the average humidity
+            # average humidity
             avg_humidity = month_data[' Mean Humidity'].mean()
 
             # Display the results
@@ -115,7 +112,7 @@ def visualise_temp_single(value, high):
 
 
 def get_daily_max_min(year, month, city):
-    # Read the data from the CSV file into a pandas DataFrame
+    # Read the data from the CSV file
     data = pd.read_csv('./' + city.lower() + '.csv')
 
     data.dropna()
@@ -170,7 +167,7 @@ def get_daily_max_min(year, month, city):
 
 
 def get_daily_max_min_no_Graph(year, month, city):
-    # Read the data from the CSV file into a pandas DataFrame
+    # Read the data from the CSV
     data = pd.read_csv('./' + city.lower() + '.csv')
 
     data.dropna()
@@ -219,7 +216,7 @@ def get_daily_max_min_no_Graph(year, month, city):
 
 
 def get_daily_max_min_single(year, month, city):
-    # Read the data from the CSV file into a pandas DataFrame
+    # Read the data from the CSV
     data = pd.read_csv('./' + city.lower() + '.csv')
 
     data.dropna()

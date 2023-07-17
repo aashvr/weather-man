@@ -5,57 +5,6 @@ import os
 import utils
 
 
-# def convert_text_files_to_csv(directory_path, output_csv_path):
-#     # Create a list to store the data
-#     data = []
-
-#     # Initialize a flag to check if the header has been added
-#     # header_added = False
-
-#     # Iterate over each file in the directory
-#     for filename in os.listdir(directory_path):
-#         if filename.endswith('.txt'):
-#             file_path = os.path.join(directory_path, filename)
-#             with open(file_path, 'r') as file:
-#                 # Get the first line
-#                 first_line = next(file).strip()
-
-#                 # Check if the first line is empty
-#                 if not first_line:
-#                     # Skip the first line
-#                     header = next(file)
-#                 else:
-#                     header = first_line
-
-#                 # Check if 'GST' or 'PKT' is present in the header
-#                 if 'GST' in header:
-#                     # Replace 'GST' with 'Time' in the header
-#                     header = header.replace('GST', 'Time')
-#                 elif 'PKT' in header:
-#                     # Replace 'PKT' with 'Time' in the header
-#                     header = header.replace('PKT', 'Time')
-#                 elif 'PKST' in header:
-#                     # Replace 'PKT' with 'Time' in the header
-#                     header = header.replace('PKST', 'Time')
-#                 # # Append the modified header to the data list if it hasn't been added yet
-#                 # if not header_added:
-#                 #     data.append(header.strip().split(','))
-#                 #     header_added = True
-
-#                 # Read each line and append it to the data list if it's not empty
-#                 for line in file:
-#                     line = line.strip()
-#                     if line and "<" not in line:  # Skip empty rows and rows containing "<!--0.188:0-->"
-#                         data.append(line.split(','))
-
-#     # Write the data to the CSV file
-#     with open(output_csv_path, 'w', newline='') as csv_file:
-#         writer = csv.writer(csv_file)
-#         # Write the data rows
-#         writer.writerows(data)
-
-#     print('Data successfully stored in the CSV file.')
-
 def convert_text_files_to_csv(directory_path, output_csv_path):
     # Create a list to store the data
     data = []
