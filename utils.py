@@ -3,6 +3,61 @@ import matplotlib.pyplot as plt
 from colorama import Fore, Style
 
 
+def visualise_temp(value):
+    output = ""
+    value = abs(value)
+    for i in range(value):
+        output += "+"
+    return output
+
+
+def visualise_temp_single(value, high):
+    output = ""
+    value = abs(value)
+    for i in range(value):
+        output += "+"
+    if (high):
+        return (Fore.RED + output)
+    else:
+        return (Fore.BLUE + output)
+
+
+def display_max_min_temp(year, max_temp, max_temp_day, min_temp, min_temp_day, max_humidity_day, max_humidity_value):
+    print("For the year", year)
+    print("Highest temperature:", max_temp, "°C on", max_temp_day)
+    print("Lowest temperature:", min_temp, "°C on", min_temp_day)
+    print("Most humid day:", max_humidity_day,
+          "with humidity", max_humidity_value)
+
+
+def display_monthly_avg_temp(year, month, avg_max_temp, avg_min_temp, avg_humidity):
+    print(f"For the month {month} / {year}")
+    print(f"Average highest temperature: {avg_max_temp} °C")
+    print(f"Average lowest temperature: {avg_min_temp} °C")
+    print(f"Average humidity: {avg_humidity}")
+
+
+def display_daily_max_min_temp(days, max_temps, min_temps):
+    print("\n")
+    # for each day display the highest and lowest temperature
+    for i in range(len(days)):
+        print(
+            f"{days[i]}: Highest: {Fore.RED + visualise_temp(int(max_temps[i]))} {max_temps[i]} °C, ")
+        print(
+            f"{days[i]}: Lowest: {Fore.BLUE + visualise_temp(int(min_temps[i]))} {min_temps[i]} °C, ")
+
+    print(Style.RESET_ALL)
+
+
+def display_daily_max_min_temp_single(days, max_temps, min_temps):
+    print("\n")
+    # for each day display the highest and lowest temperature
+    for i in range(len(days)):
+        print(f"{days[i]}: {visualise_temp_single(int(min_temps[i]), False)} {visualise_temp_single(int(max_temps[i]), True)} {Style.RESET_ALL} \t {min_temps[i]} °C - {max_temps[i]} °C ")
+
+    print(Style.RESET_ALL)
+
+
 def get_max_temp(year, city):
 
     # Reading the data from the csv file.
@@ -34,12 +89,8 @@ def get_max_temp(year, city):
         max_temp_day = pd.to_datetime(max_temp_day).strftime('%d %B')
         min_temp_day = pd.to_datetime(min_temp_day).strftime('%d %B')
 
-        # Display the results
-        print("For the year", year)
-        print("Highest temperature:", max_temp, "°C on", max_temp_day)
-        print("Lowest temperature:", min_temp, "°C on", min_temp_day)
-        print("Most humid day:", max_humidity_day,
-              "with humidity", max_humidity_value)
+        display_max_min_temp(year, max_temp, max_temp_day, min_temp,
+                             min_temp_day, max_humidity_day, max_humidity_value)
     else:
         print("No data available for the year", year)
 
@@ -81,34 +132,12 @@ def get_monthly_avg(year, month, city):
             # average humidity
             avg_humidity = month_data[' Mean Humidity'].mean()
 
-            # Display the results
-            print(f"For the month {month} / {year}")
-            print(f"Average highest temperature: {avg_max_temp} °C")
-            print(f"Average lowest temperature: {avg_min_temp} °C")
-            print(f"Average humidity: {avg_humidity}")
+            display_monthly_avg_temp(
+                year, month, avg_max_temp, avg_min_temp, avg_humidity)
         else:
             print("No data available for the month", month + '/' + year)
     else:
         print("No data available for the year", year)
-
-
-def visualise_temp(value):
-    output = ""
-    value = abs(value)
-    for i in range(value):
-        output += "+"
-    return output
-
-
-def visualise_temp_single(value, high):
-    output = ""
-    value = abs(value)
-    for i in range(value):
-        output += "+"
-    if (high):
-        return (Fore.RED + output)
-    else:
-        return (Fore.BLUE + output)
 
 
 def get_daily_max_min(year, month, city):
@@ -201,16 +230,7 @@ def get_daily_max_min_no_Graph(year, month, city):
             max_temps = month_data['Max TemperatureC']
             min_temps = month_data['Min TemperatureC']
 
-            # print(len(days), len(max_temps), len(min_temps))
-
-            # for each day display the highest and lowest temperature
-            for i in range(len(days)):
-                print(
-                    f"{days[i]}: Highest: {Fore.RED + visualise_temp(int(max_temps[i]))} {max_temps[i]} °C, ")
-                print(
-                    f"{days[i]}: Lowest: {Fore.BLUE + visualise_temp(int(min_temps[i]))} {min_temps[i]} °C, ")
-
-        print(Style.RESET_ALL)
+        display_daily_max_min_temp(days, max_temps, min_temps)
     else:
         print("No data available for the year", year)
 
@@ -248,12 +268,6 @@ def get_daily_max_min_single(year, month, city):
             max_temps = month_data['Max TemperatureC']
             min_temps = month_data['Min TemperatureC']
 
-            print("\n")
-            # for each day display the highest and lowest temperature
-            for i in range(len(days)):
-                print(
-                    f"{days[i]}: {visualise_temp_single(int(min_temps[i]), False)} {visualise_temp_single(int(max_temps[i]), True)} {Style.RESET_ALL} \t {min_temps[i]} °C - {max_temps[i]} °C ")
-
-        print(Style.RESET_ALL)
+        display_daily_max_min_temp_single(days, max_temps, min_temps)
     else:
         print("No data available for the year", year)
